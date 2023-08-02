@@ -21,7 +21,7 @@ def durationToSeconds(hms) -> float:
     return seconds
 
 def get_full_filepath(filename):
-    current_dir = os.getcwd()
+    current_dir = os.path.dirname(os.path.realpath(__file__))
     directory, file = os.path.split(filename)
 
     if not directory:
