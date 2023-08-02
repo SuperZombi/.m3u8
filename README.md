@@ -1,7 +1,5 @@
-# M3U8
-
-### A simple .m3u8 video downloader
-
+<h1 align="center">M3U8 Downloader</h1>
+<h3 align="center">A simple .m3u8 video downloader</h3>
 <p align="right">
     <img align="left" src="https://shields.io/badge/version-v2.0.0-blue">
     <a href="#donate">💲Support the Project</a>
@@ -23,8 +21,9 @@
 1. Run the `install.py` file
 2. Choose the desired action and then confirm the execution of the `.reg` file
 
+<hr>
 
-#### 💲Donate
+### 💲Donate
 
 <table>
   <tr>
