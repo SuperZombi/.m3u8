@@ -11,7 +11,7 @@
 
 1. [Download Python](https://www.python.org/downloads/)
 2. [Download FFMPEG](https://ffmpeg.org/download.html)
-3. [Download all files](https://github.com/SuperZombi/m3u8/archive/refs/heads/main.zip)
+3. [Download all files](https://github.com/SuperZombi/m3u8/releases)
 4. Put them in a common folder
 5. Run the `runner.bat` file
 
