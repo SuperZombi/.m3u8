@@ -1,4 +1,7 @@
 import customtkinter
+from tkinter import messagebox
+from CTkMessagebox import CTkMessagebox
+import os
 
 # customtkinter.set_appearance_mode("light")  # Modes: system (default), light, dark
 # customtkinter.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
@@ -34,11 +37,10 @@ class App(customtkinter.CTk):
 		self.fileName.pack(padx=20, pady=(0, 8), fill="x")
 		self.fileName.bind("<KeyRelease>", self.onInput)
 
-		self.startButton = customtkinter.CTkButton(self, text="Download", command=self.button_callbck, state="disabled")
+		self.startButton = customtkinter.CTkButton(self, text="Download", command=self.start_work, state="disabled")
 		self.startButton.pack(side="bottom", pady=8)
 
-	def button_callbck(self):
-		print("button clicked")
+		self.progressbar = customtkinter.CTkProgressBar(self, orientation="horizontal")
 
 	def openTargetFolderDialog(self):
 		folder = customtkinter.filedialog.askdirectory()
@@ -60,6 +62,21 @@ class App(customtkinter.CTk):
 			self.startButton.configure(state='normal')
 		else:
 			self.startButton.configure(state='disabled')
+
+	def fileAreadyExists(self, filename) -> bool:
+		msg = CTkMessagebox(title="File already exists", message=f"Remove file {filename}?",
+							icon="question", option_1="No", option_2="Yes")
+		return msg.get() == "Yes"
+
+	def start_work(self):
+		self._targetFile_ = os.path.join(self.targetFolder.get(), self.fileName.get())
+		if os.path.exists(self._targetFile_):
+			result = self.fileAreadyExists(self._targetFile_)
+			if not result: return
+			os.remove(self._targetFile_)
+		
+		self.progressbar.set(0)
+		self.progressbar.pack(side="bottom", pady=8, padx=20, fill="x")
 
 
 app = App()
