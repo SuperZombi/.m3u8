@@ -57,15 +57,14 @@ def main() -> None:
         m3u8 = params['url']
         file_name = params['name'] + ".mp4"
         file = get_full_filepath(file_name)
-        choice = input(f"[ {color.MAGENTA}?{color.STOP} ] {color.GRAY}Download: {color.YELLOW}{file}{color.STOP}\n[ {color.YELLOW}>{color.STOP} ] (Y/path) ")
+        choice = input(f"[ {color.MAGENTA}?{color.STOP} ] {color.GRAY}Download: {color.YELLOW}{file}{color.STOP}\n[ {color.YELLOW}>{color.STOP} ] (Y/path)  ")
         if choice.lower() != "y":
-            choice = choice.strip('\"')
-            if os.path.exists(choice):
-                if os.path.isfile(choice):
-                    choice = os.path.dirname(choice)
+            choice = choice.strip('\" ')
+            if os.path.isdir(choice):
                 file = get_full_filepath(os.path.join(choice, file_name))
             else:
-                return exit(EXIT_FAILURE)
+                file = get_full_filepath(choice)
+               
     else:
         m3u8: str = input(f"[ {color.MAGENTA}?{color.STOP} ] {color.GRAY}URL of the video (.m3u8 or .ts only):{color.STOP}\n[ {color.YELLOW}>{color.STOP} ] ")
         file: str = input(f"[ {color.MAGENTA}?{color.STOP} ] {color.GRAY}Name of your file (with the extension):{color.STOP}\n[ {color.YELLOW}>{color.STOP} ] ")
