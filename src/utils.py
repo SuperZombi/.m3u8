@@ -4,11 +4,18 @@ import os
 import sys
 import re
 
-def ffmpeg_isInstalled() -> bool:
-    output: str = os.popen(
-        cmd="ffmpeg -version"
-    ).read()
-    return "gcc" in output
+def get_ffmpeg_ver() -> dict:
+    def find_ver(text) -> str:
+        return text.splitlines()[0].split("ffmpeg version")[-1].strip().split()[0]
+    def find_year(text) -> list:
+        match = re.findall(r'\b([1-3][0-9]{3})\b', text)
+        if match is not None:
+            return match
+    try:
+        process = subprocess.Popen(["ffmpeg", "-version"], stdout=subprocess.PIPE, encoding=os.device_encoding(0))
+        answer = process.communicate()[0]
+        return {'ver': find_ver(answer.strip()), 'year': find_year(answer.strip())[-1]}
+    except FileNotFoundError: return {}
 
 def get_audio_duration(file) -> float:
     result = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', file],
@@ -62,7 +69,7 @@ def make_ffmpeg_command(command, duration, on_progress=None):
                     result = re.search(r"\.*time=(.*?) ", line)
                     seconds = durationToSeconds(result.group(1))
                     if on_progress:
-                        on_progress(seconds, duration)
+                        on_progress(seconds, duration, process)
                     else:
                         display_progress_bar(seconds, duration)
                 except: None
