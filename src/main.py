@@ -6,22 +6,10 @@ from utils import *
 from functools import partial
 from frames import *
 
-__version__ = '1.1.0'
+__version__ = '1.2.0'
 
 # customtkinter.set_appearance_mode("light")  # Modes: system (default), light, dark
 # customtkinter.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
-
-accentColor = customtkinter.ThemeManager.theme['CTkButton']['fg_color'][0]
-
-appConfig = {}
-if getattr(sys, 'frozen', False):
-	appConfig['path'] = sys.executable
-	appConfig['run_as'] = "exe"
-else:
-	appConfig['path'] = os.path.realpath(__file__)
-	appConfig['run_as'] = "python"
-	appConfig['python_path'] = sys.executable
-
 
 
 class App(customtkinter.CTk):
@@ -31,6 +19,17 @@ class App(customtkinter.CTk):
 		self.geometry("400x400")
 		self.minsize(300, 350)
 		self.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+		self.appConfig = {}
+		self.appConfig['accentColor'] = customtkinter.ThemeManager.theme['CTkButton']['fg_color'][0]
+
+		if getattr(sys, 'frozen', False):
+			self.appConfig['app_path'] = sys.executable
+			self.appConfig['run_as'] = "exe"
+		else:
+			self.appConfig['app_path'] = os.path.realpath(__file__)
+			self.appConfig['run_as'] = "python"
+			self.appConfig['python_path'] = sys.executable
 
 		# Header menu
 		container = customtkinter.CTkFrame(self, corner_radius=0)
@@ -52,7 +51,7 @@ class App(customtkinter.CTk):
 			"settings": {"text": "Settings", "frame": SettingsFrame}
 		})
 		
-		customtkinter.CTkLabel(self, text="M3U8 VIDEO DOWNLOADER", font=("", 16, 'bold'), text_color=accentColor).pack(pady=8)
+		customtkinter.CTkLabel(self, text="M3U8 VIDEO DOWNLOADER", font=("", 16, 'bold'), text_color=self.appConfig['accentColor']).pack(pady=8)
 
 
 	def on_closing(self):

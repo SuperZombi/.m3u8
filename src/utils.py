@@ -1,5 +1,5 @@
 import subprocess
-import os
+import os, sys
 import re
 from customtkinter import CTkFrame
 
@@ -17,6 +17,10 @@ class MyTabFrame(CTkFrame):
 	def onload(self): pass
 	def on_closing(self): pass
 
+
+def resource_path(relative_path):
+	base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+	return os.path.join(base_path, relative_path)
 
 def get_ffmpeg_ver() -> dict:
 	def find_ver(text) -> str:
