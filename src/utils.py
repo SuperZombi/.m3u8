@@ -4,6 +4,11 @@ import os
 import sys
 import re
 
+startupinfo = None
+if os.name == 'nt':
+	startupinfo = subprocess.STARTUPINFO()
+	startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+
 def get_ffmpeg_ver() -> dict:
 	def find_ver(text) -> str:
 		return text.splitlines()[0].split("ffmpeg version")[-1].strip().split()[0]
@@ -12,7 +17,7 @@ def get_ffmpeg_ver() -> dict:
 		if match is not None:
 			return match
 	try:
-		process = subprocess.Popen(["ffmpeg", "-version"], stdout=subprocess.PIPE)
+		process = subprocess.Popen(["ffmpeg", "-version"], stdout=subprocess.PIPE, startupinfo=startupinfo)
 		answer = process.communicate()[0]
 		try:
 			answer = answer.decode('utf-8')
@@ -23,7 +28,7 @@ def get_ffmpeg_ver() -> dict:
 
 def get_audio_duration(file) -> float:
 	result = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', file],
-							stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, encoding=os.device_encoding(0))
+							stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, encoding=os.device_encoding(0), startupinfo=startupinfo)
 	return float(result.stdout)
 
 def durationToSeconds(hms) -> float:
@@ -62,7 +67,7 @@ def clear_last_line(amount=1):
 			sys.stdout.write("\033[F") #back to previous line
 
 def make_ffmpeg_command(command, duration, on_progress=None):
-	process = subprocess.Popen(command, encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+	process = subprocess.Popen(command, encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=startupinfo)
 	history = []
 	with process.stdout as pipe:
 		for line in pipe:

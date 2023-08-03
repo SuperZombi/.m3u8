@@ -154,12 +154,12 @@ class App(customtkinter.CTk):
 			self.update()
 
 		make_ffmpeg_command(["ffmpeg", "-reconnect", "1",
-                        "-reconnect_at_eof", "1",
-                        "-reconnect_streamed", "1",
-                        "-reconnect_delay_max", "2",
-                        "-protocol_whitelist", "file,http,https,tcp,tls",
-                        "-i", self.m3u8,
-                        self.targetFile], duration=duration, on_progress=progress)
+							"-reconnect_at_eof", "1",
+							"-reconnect_streamed", "1",
+							"-reconnect_delay_max", "2",
+							"-protocol_whitelist", "file,http,https,tcp,tls",
+							"-i", self.m3u8, self.targetFile],
+							duration=duration, on_progress=progress)
 		self.on_finish()
 
 	def on_finish(self):
