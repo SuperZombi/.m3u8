@@ -1,6 +1,7 @@
 from utils import *
 import customtkinter
 import threading
+import urllib.parse as urlparse
 
 class HomeFrame(MyTabFrame):
 	def __init__(self, master):
@@ -52,10 +53,19 @@ class HomeFrame(MyTabFrame):
 		self.fileExt.insert(0, "mp4")
 		self.onInput("")
 
-		self.setTargetFolder(os.getcwd())
+		self.setTargetFolder(os.path.dirname(self.master.appConfig['app_path']))
+		self.parse_args()
 
 	def on_closing(self):
 		self.stopProcess=True
+
+	def parse_args(self):
+		if self.master.args.browser:
+			url = self.master.args.browser
+			params = dict(urlparse.parse_qsl(urlparse.urlparse(url).query))
+			self.videoUrl.insert(0, params['url'])
+			self.fileName.insert(0, params['name'])
+			self.onInput("")
 
 	def setTargetFolder(self, value):
 		self.targetFolder.configure(state='normal')

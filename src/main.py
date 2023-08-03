@@ -5,8 +5,9 @@ import os, sys
 from utils import *
 from functools import partial
 from frames import *
+from argparse import ArgumentParser
 
-__version__ = '1.2.0'
+__version__ = '2.0.0'
 
 # customtkinter.set_appearance_mode("light")  # Modes: system (default), light, dark
 # customtkinter.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
@@ -60,6 +61,7 @@ class App(customtkinter.CTk):
 		self.destroy()
 
 	def onload(self):
+		self.parse_args()
 		self.change_tab("home")
 
 		info = get_ffmpeg_ver()
@@ -71,6 +73,11 @@ class App(customtkinter.CTk):
 			frame["frame"].onload()
 
 		self.mainloop()
+
+	def parse_args(self):
+		parser = ArgumentParser()
+		parser.add_argument('-browser', '--browser')
+		self.args = parser.parse_args()
 
 	def change_tab(self, target):
 		for frame in self.menuFrames.values():
