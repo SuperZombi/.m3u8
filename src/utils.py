@@ -1,13 +1,22 @@
-import shutil
 import subprocess
 import os
-import sys
 import re
+from customtkinter import CTkFrame
 
 startupinfo = None
 if os.name == 'nt':
 	startupinfo = subprocess.STARTUPINFO()
 	startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+
+
+class MyTabFrame(CTkFrame):
+	def __init__(self, master):
+		super().__init__(master, fg_color="transparent")
+		self.master = master
+
+	def onload(self): pass
+	def on_closing(self): pass
+
 
 def get_ffmpeg_ver() -> dict:
 	def find_ver(text) -> str:
@@ -36,36 +45,6 @@ def durationToSeconds(hms) -> float:
 	seconds = (int(a[0])) * 60 * 60 + (int(a[1])) * 60 + (float(a[2]));
 	return seconds
 
-def get_full_filepath(filename):
-	current_dir = os.path.dirname(os.path.realpath(__file__))
-	directory, file = os.path.split(filename)
-
-	if not directory:
-		directory = current_dir
-
-	full_file_path = os.path.join(directory, file)
-	return os.path.abspath(full_file_path)
-
-def display_progress_bar(
-	current: int, filesize: int, ch: str = "█", scale: float = 0.5
-) -> None:
-	columns = shutil.get_terminal_size().columns
-	max_width = int(columns * scale)
-	filled = int(round(max_width * current / float(filesize)))
-	remaining = max_width - filled
-	progress_bar = ch * filled + " " * remaining
-	percent = round(100.0 * current / float(filesize), 1)
-	text = f"[ ↳ ] |{progress_bar}| {percent}%\r"
-	sys.stdout.write(text)
-	sys.stdout.flush()
-
-def clear_last_line(amount=1):
-	os.system('')
-	for i in range(amount):
-		sys.stdout.write("\033[K") #clear line
-		if i < amount-1:
-			sys.stdout.write("\033[F") #back to previous line
-
 def make_ffmpeg_command(command, duration, on_progress=None):
 	process = subprocess.Popen(command, encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=startupinfo)
 	history = []
@@ -79,8 +58,6 @@ def make_ffmpeg_command(command, duration, on_progress=None):
 					seconds = durationToSeconds(result.group(1))
 					if on_progress:
 						on_progress(seconds, duration, process)
-					else:
-						display_progress_bar(seconds, duration)
 				except: None
 
 	return process.wait(), history
