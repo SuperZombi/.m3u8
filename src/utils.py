@@ -12,8 +12,12 @@ def get_ffmpeg_ver() -> dict:
 		if match is not None:
 			return match
 	try:
-		process = subprocess.Popen(["ffmpeg", "-version"], stdout=subprocess.PIPE, encoding=os.device_encoding(0))
+		process = subprocess.Popen(["ffmpeg", "-version"], stdout=subprocess.PIPE)
 		answer = process.communicate()[0]
+		try:
+			answer = answer.decode('utf-8')
+		except UnicodeDecodeError:
+			answer = answer.decode(os.device_encoding(0))
 		return {'ver': find_ver(answer.strip()), 'year': find_year(answer.strip())[-1]}
 	except FileNotFoundError: return {}
 

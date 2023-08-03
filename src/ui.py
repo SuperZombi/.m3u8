@@ -75,11 +75,12 @@ class App(customtkinter.CTk):
 		if not info.get('ver'):
 			self.showError("FFmpeg is not installed!")
 			return self.destroy()
-		self.setTargetFolder(os.path.dirname(os.path.realpath(__file__)))
+		self.setTargetFolder(os.getcwd())
 		self.mainloop()
 
 	def setTargetFolder(self, value):
 		self.targetFolder.configure(state='normal')
+		self.targetFolder.delete(0, "end")
 		self.targetFolder.insert(0, value)
 		self.targetFolder.configure(state='disabled')
 		self.onInput("")
