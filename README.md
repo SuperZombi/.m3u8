@@ -1,25 +1,18 @@
 <h1 align="center">M3U8 Downloader</h1>
 <h3 align="center">A simple .m3u8 video downloader</h3>
 <p align="right">
-    <img align="left" src="https://shields.io/badge/version-v2.0.0-blue">
+    <img align="left" src="https://shields.io/badge/version-v1.0.0-blue">
     <a href="#donate">💲Support the Project</a>
 </p>
 
-![image](/.github/images/process.png)
+![image](/.github/images/gui.png)
 
 ## How to install it ?
 
-1. [Download Python](https://www.python.org/downloads/)
-2. [Download FFMPEG](https://ffmpeg.org/download.html)
-3. [Download all files](https://github.com/SuperZombi/m3u8/releases)
-4. Put them in a common folder
-5. Run the `runner.bat` file
+1. [Download FFMPEG](https://ffmpeg.org/download.html)
+2. [Download latest Release](https://github.com/SuperZombi/m3u8/releases)
+3. Run the `.exe` file
 
-
-## How to open links from browser in this app ?
-
-1. Run the `install.py` file
-2. Choose the desired action and then confirm the execution of the `.reg` file
 
 <hr>
 

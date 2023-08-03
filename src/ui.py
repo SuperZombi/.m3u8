@@ -5,7 +5,7 @@ import os
 from utils import *
 import threading
 
-__version__ = '3.0.0'
+__version__ = '1.0.0'
 
 # customtkinter.set_appearance_mode("light")  # Modes: system (default), light, dark
 # customtkinter.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
