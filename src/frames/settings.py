@@ -13,7 +13,7 @@ class SettingsFrame(MyTabFrame):
 
 		customtkinter.CTkButton(container, text="Install application", command=self.installApp
 		).grid(column=0, row=0)
-		customtkinter.CTkButton(container, text="Uninstall application", command=self.uninstallApp
+		customtkinter.CTkButton(container, fg_color="red", hover_color="darkred", text="Uninstall application", command=self.uninstallApp
 		).grid(column=1, row=0)
 
 
