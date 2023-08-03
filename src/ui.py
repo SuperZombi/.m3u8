@@ -26,7 +26,7 @@ class App(customtkinter.CTk):
 		self.videoUrl.pack(padx=20, pady=(0, 8), fill="x")
 		self.videoUrl.bind("<KeyRelease>", self.onInput)
 
-		customtkinter.CTkLabel(self, text="Target folder:", font=("", 14)).pack()
+		customtkinter.CTkLabel(self, text="Output folder:", font=("", 14)).pack()
 		container = customtkinter.CTkFrame(master=self, fg_color='transparent')
 		container.pack(padx=20, pady=(0, 8), fill="x")
 		container.grid_columnconfigure(0, weight=100)
