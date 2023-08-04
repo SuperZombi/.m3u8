@@ -7,7 +7,7 @@ class HomeFrame(MyTabFrame):
 	def __init__(self, master):
 		super().__init__(master)
 
-		customtkinter.CTkLabel(self, text="Video URL (.m3u8):", font=("", 14)).pack()
+		customtkinter.CTkLabel(self, text="Video URL:", font=("", 14)).pack()
 		self.videoUrl = customtkinter.CTkEntry(self, placeholder_text="URL of the video (.m3u8)", justify="center", font=("", 12))
 		self.videoUrl.pack(padx=20, pady=(0, 8), fill="x")
 		self.videoUrl.bind("<KeyRelease>", self.onInput)
@@ -50,6 +50,7 @@ class HomeFrame(MyTabFrame):
 		self.startButton.pack(side="bottom", pady=8)
 
 	def onload(self):
+		self.allowedProtocols = ("http", "https")
 		self.fileExt.insert(0, "mp4")
 		self.onInput("")
 
@@ -84,6 +85,8 @@ class HomeFrame(MyTabFrame):
 		for widget in widgets:
 			if widget.get().strip() == "":
 				return False
+		if not self.videoUrl.get().startswith(self.allowedProtocols):
+			return False
 		return True
 
 	def onInput(self, event):
@@ -142,7 +145,7 @@ class HomeFrame(MyTabFrame):
 									"-reconnect_at_eof", "1",
 									"-reconnect_streamed", "1",
 									"-reconnect_delay_max", "2",
-									"-protocol_whitelist", "file,http,https,tcp,tls",
+									"-protocol_whitelist", ",".join(self.allowedProtocols),
 									"-i", self.m3u8, self.targetFile],
 									duration=duration, on_progress=progress)
 		if result[0] == 0:
