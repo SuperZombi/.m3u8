@@ -5,11 +5,11 @@
     <a href="#donate">💲Support the Project</a>
 </p>
 
-![image](/.github/images/gui.png)
+![image](/.github/images/main.png)
 
 ## How to install it ?
 
-1. [Download FFMPEG](https://ffmpeg.org/download.html)
+1. [Download FFMPEG](https://ffmpeg.org/download.html) and add it to the PATH
 2. [Download latest Release](https://github.com/SuperZombi/m3u8/releases)
 3. Run the `.exe` file
 
@@ -17,6 +17,7 @@
 
 1. Go to Settings
 2. Choose Install app and then confirm the execution of the `.reg` file
+![image](/.github/images/settings.png)
 
 
 <hr>
