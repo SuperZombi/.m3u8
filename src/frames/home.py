@@ -50,7 +50,7 @@ class HomeFrame(MyTabFrame):
 		self.startButton.pack(side="bottom", pady=8)
 
 	def onload(self):
-		self.allowedProtocols = ("http", "https")
+		self.allowedProtocols = ("http://", "https://")
 		self.fileExt.insert(0, "mp4")
 		self.onInput("")
 
@@ -145,7 +145,7 @@ class HomeFrame(MyTabFrame):
 									"-reconnect_at_eof", "1",
 									"-reconnect_streamed", "1",
 									"-reconnect_delay_max", "2",
-									"-protocol_whitelist", ",".join(self.allowedProtocols),
+									"-protocol_whitelist", "file,http,https,tcp,tls",
 									"-i", self.m3u8, self.targetFile],
 									duration=duration, on_progress=progress)
 		if result[0] == 0:
