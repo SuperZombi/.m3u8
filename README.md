@@ -10,7 +10,7 @@
 ## How to install it ?
 
 1. [Download FFMPEG](https://ffmpeg.org/download.html) and add it to the `PATH`
-2. [Download latest Release](https://github.com/SuperZombi/m3u8/releases)
+2. [Download latest Release](https://github.com/SuperZombi/m3u8-downloader/releases)
 3. Run the `.exe` file
 
 ## How to open links from browser in this app ?
