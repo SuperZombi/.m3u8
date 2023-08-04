@@ -148,7 +148,7 @@ class HomeFrame(MyTabFrame):
 			self.master.update()
 			self.master.flash_window_progress(round(percent*100))
 
-		result = make_ffmpeg_command(["ffmpeg", "-reconnect", "1",
+		result = make_ffmpeg_command([ffmpeg(), "-reconnect", "1",
 									"-reconnect_at_eof", "1",
 									"-reconnect_streamed", "1",
 									"-reconnect_delay_max", "2",

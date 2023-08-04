@@ -22,6 +22,13 @@ def resource_path(relative_path):
 	base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
 	return os.path.join(base_path, relative_path)
 
+def ffmpeg() -> str:
+	f = os.path.join(resource_path("ffmpeg"), "ffmpeg.exe")
+	return f if os.path.exists(f) else "ffmpeg"
+def ffprobe() -> str:
+	f = os.path.join(resource_path("ffmpeg"), "ffprobe.exe")
+	return f if os.path.exists(f) else "ffprobe"
+
 def get_ffmpeg_ver() -> dict:
 	def find_ver(text) -> str:
 		return text.splitlines()[0].split("ffmpeg version")[-1].strip().split()[0]
@@ -30,7 +37,7 @@ def get_ffmpeg_ver() -> dict:
 		if match is not None:
 			return match
 	try:
-		process = subprocess.Popen(["ffmpeg", "-version"], stdout=subprocess.PIPE, startupinfo=startupinfo)
+		process = subprocess.Popen([ffmpeg(), "-version"], stdout=subprocess.PIPE, startupinfo=startupinfo)
 		answer = process.communicate()[0]
 		try:
 			answer = answer.decode('utf-8')
@@ -40,7 +47,7 @@ def get_ffmpeg_ver() -> dict:
 	except FileNotFoundError: return {}
 
 def get_audio_duration(file) -> float:
-	result = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', file],
+	result = subprocess.run([ffprobe(), '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', file],
 							stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, encoding=os.device_encoding(0), startupinfo=startupinfo)
 	return float(result.stdout)
 
