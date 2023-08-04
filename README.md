@@ -10,6 +10,8 @@
 ## How to install it ?
 
 1. [Download FFMPEG](https://ffmpeg.org/download.html) and add it to the `PATH`
+
+    OR now you can download version with built-in ffmpeg
 2. [Download latest Release](https://github.com/SuperZombi/m3u8-downloader/releases)
 3. Run the `.exe` file
 
