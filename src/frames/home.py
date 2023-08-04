@@ -49,6 +49,8 @@ class HomeFrame(MyTabFrame):
 		self.startButton = customtkinter.CTkButton(self, text="Download", command=self.start_work, state="disabled")
 		self.startButton.pack(side="bottom", pady=8)
 
+		self.master.bind('<Return>', self.start_work)
+
 	def onload(self):
 		self.allowedProtocols = ("http://", "https://")
 		self.fileExt.insert(0, "mp4")
@@ -101,7 +103,9 @@ class HomeFrame(MyTabFrame):
 		self.progressWrapper.pack_forget()
 		self.master.update()
 
-	def start_work(self):
+	def start_work(self, event=None):
+		if not self.checkWidgetsFilled(): return
+
 		self.targetFile = os.path.join(self.targetFolder.get(), self.fileName.get() + "." + self.fileExt.get())
 		self.m3u8 = self.videoUrl.get()
 		if os.path.exists(self.targetFile):

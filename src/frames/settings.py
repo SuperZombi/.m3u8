@@ -7,14 +7,16 @@ class SettingsFrame(MyTabFrame):
 		super().__init__(master)
 		self.protocol = "m3u8"
 
-		container = customtkinter.CTkFrame(self, fg_color='transparent')
+		customtkinter.CTkLabel(self, text=f"version: {self.master.__version__}", font=("", 15)).pack(pady=(0, 8))
+
+		container = customtkinter.CTkFrame(self)
 		container.pack(padx=20, pady=8, fill="x")
 		container.grid_columnconfigure((0, 1), weight=1)
 
 		customtkinter.CTkButton(container, text="Install application", command=self.installApp
-		).grid(column=0, row=0)
+		).grid(column=0, row=0, pady=10)
 		customtkinter.CTkButton(container, fg_color="red", hover_color="darkred", text="Uninstall application", command=self.uninstallApp
-		).grid(column=1, row=0)
+		).grid(column=1, row=0, pady=10)
 
 
 	def onload(self):
