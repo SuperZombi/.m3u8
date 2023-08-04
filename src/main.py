@@ -6,6 +6,7 @@ from utils import *
 from functools import partial
 from frames import *
 from argparse import ArgumentParser
+import ctypes
 
 # customtkinter.set_appearance_mode("light")  # Modes: system (default), light, dark
 # customtkinter.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
@@ -97,9 +98,9 @@ class App(customtkinter.CTk):
 		msg.info._text_label.configure(wraplength=msg.width)
 		return msg.get() == "Yes"
 
-	def open_file(self, file):
-		if os.path.exists(file):
-			os.system(f'explorer /select,"{file}"')
+	def flash_window(self):
+		hwnd = int(self.wm_frame(), 16)
+		ctypes.windll.user32.FlashWindow(hwnd, True)
 
 
 app = App()

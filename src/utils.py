@@ -49,6 +49,15 @@ def durationToSeconds(hms) -> float:
 	seconds = (int(a[0])) * 60 * 60 + (int(a[1])) * 60 + (float(a[2]));
 	return seconds
 
+def openExplorer(path):
+	CREATE_NO_WINDOW = 0x08000000
+	if not os.path.exists(path): return
+	if os.path.isdir(path):
+		subprocess.run(["explorer", path], creationflags=CREATE_NO_WINDOW)
+	elif os.path.isfile(path):
+		subprocess.run(["explorer", '/select,', path], creationflags=CREATE_NO_WINDOW)
+
+
 def make_ffmpeg_command(command, duration, on_progress=None):
 	process = subprocess.Popen(command, encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=startupinfo)
 	history = []

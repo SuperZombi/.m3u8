@@ -158,7 +158,8 @@ class HomeFrame(MyTabFrame):
 	def on_finish(self):
 		self.startButton.configure(text="Open")
 		self.startButton.configure(command=self.open_file)
+		self.master.flash_window()
 
 	def open_file(self):
-		self.master.open_file(self.targetFile)
-		self.after(3000, self.resetStartButton)
+		openExplorer(self.targetFile)
+		self.after(5000, self.resetStartButton)
