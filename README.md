@@ -1,7 +1,7 @@
 <h1 align="center">M3U8 Downloader</h1>
 <h3 align="center">A simple .m3u8 video downloader</h3>
 <p align="right">
-    <img align="left" src="https://shields.io/badge/version-v2.0.0-blue">
+    <img align="left" src="https://shields.io/badge/version-v2.0.1-blue">
     <a href="#donate">💲Support the Project</a>
 </p>
 
