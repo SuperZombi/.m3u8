@@ -6,7 +6,7 @@ from utils import *
 from functools import partial
 from frames import *
 from argparse import ArgumentParser
-import ctypes
+import PyTaskbar
 
 # customtkinter.set_appearance_mode("light")  # Modes: system (default), light, dark
 # customtkinter.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
@@ -16,7 +16,7 @@ class App(customtkinter.CTk):
 	def __init__(self):
 		super().__init__()
 		self.title("M3U8 Video Downloader")
-		self.__version__ = '2.0.1'
+		self.__version__ = '2.1.0'
 		
 		self.geometry("400x400")
 		self.minsize(300, 350)
@@ -73,6 +73,8 @@ class App(customtkinter.CTk):
 		for frame in self.menuFrames.values():
 			frame["frame"].onload()
 
+		self.init_progressbar()
+
 		self.mainloop()
 
 	def parse_args(self):
@@ -98,9 +100,20 @@ class App(customtkinter.CTk):
 		msg.info._text_label.configure(wraplength=msg.width)
 		return msg.get() == "Yes"
 
-	def flash_window(self):
+	def init_progressbar(self):
 		hwnd = int(self.wm_frame(), 16)
-		ctypes.windll.user32.FlashWindow(hwnd, True)
+		self.taskbar_progress = PyTaskbar.Progress(hwnd=hwnd)
+		self.taskbar_progress.init()
+
+	def reset_progressbar(self):
+		self.taskbar_progress.setState("normal")
+
+	def flash_window(self):
+		self.taskbar_progress.setState("normal")
+		self.taskbar_progress.setState("done")
+
+	def flash_window_progress(self, progress_value):
+		self.taskbar_progress.setProgress(progress_value)
 
 
 app = App()

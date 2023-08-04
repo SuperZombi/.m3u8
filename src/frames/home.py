@@ -102,6 +102,7 @@ class HomeFrame(MyTabFrame):
 		self.startButton.configure(command=self.start_work)
 		self.progressWrapper.pack_forget()
 		self.master.update()
+		self.master.reset_progressbar()
 
 	def start_work(self, event=None):
 		if not self.checkWidgetsFilled(): return
@@ -140,10 +141,12 @@ class HomeFrame(MyTabFrame):
 			if self.stopProcess:
 				process.kill()
 				self.resetStartButton()
+				return
 			percent = round(current / total, 2)
 			self.progressbar.set(percent)
 			self.progressValue.configure(text=str(round(percent*100))+"%")
 			self.master.update()
+			self.master.flash_window_progress(round(percent*100))
 
 		result = make_ffmpeg_command(["ffmpeg", "-reconnect", "1",
 									"-reconnect_at_eof", "1",
